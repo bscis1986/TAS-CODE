@@ -36,7 +36,7 @@ int main(void)
 {
 	uint8_t i=0,j=0; 
 	uint16_t (*p)[64][64]  =  value_final;
-	uint16_t R_Factor = 0;
+	float R_Factor = 0;
 	peripheral_init();
   while (1)
  	{					 	
@@ -76,15 +76,14 @@ int main(void)
 				{
 				    drive_switch_init();
 						STOP_TIMER;
-					 // R_Factor = (float)(0.0079f * amp_factor_get * parameter_get.dac_set_get * P_AMP_FACTOR) <<10 ;
-					  R_Factor = (uint16_t)(0.0079f * amp_factor_get * parameter_get.dac_set_get * P_AMP_FACTOR) <<10 ;
+					  R_Factor = (float)(0.0079f * amp_factor_get * parameter_get.dac_set_get * P_AMP_FACTOR);
 						if(FILTER_ON != SAMPLE_RATE)  //filter function off
 						{				
 						    sample_time = QUEUE_LENGTH - 1;
 								for(i = 0;i < MAX_LINE_NUM; i++)
 								    for(j = 0;j < MAX_COLUMN_NUM; j++)
 										{						
-											   send_buf_un.send_buf.filter_data[i][j]  = *(*(*(p + sample_time)+i)+j) * R_Factor >> 10;
+											   send_buf_un.send_buf.filter_data[i][j]  = *(*(*(p + sample_time)+i)+j) * R_Factor;
 												if( send_buf_un.send_buf.filter_data[i][j] < parameter_get.min_threshold_Value)
 												{
 												     send_buf_un.send_buf.filter_data[i][j] &= 0;   
