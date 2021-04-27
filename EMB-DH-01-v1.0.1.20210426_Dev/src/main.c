@@ -31,7 +31,7 @@ extern float large_pressure_factor;
 uint16_t value_final[QUEUE_LENGTH][MAX_LINE_NUM][MAX_COLUMN_NUM]={0};
 uint32_t packet_sent=1,psum=0,packet_receive=1;
 uint8_t  full_flag=0;
-NVIC_InitTypeDef NVIC_InitStructure;
+
 int main(void)
 {
 	uint8_t i=0,j=0; 
@@ -115,18 +115,10 @@ int main(void)
 						}			
 						line_num = 0;
 						line_channel = 1;
-						process_data();
-						NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
-						NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //2  //1
-						NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-						NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
-						NVIC_Init(&NVIC_InitStructure);
+						process_data();	
+            disable_nvic_usb(DISABLE);					
 						trans_data1();	
-						NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
-						NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //2  //1
-						NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-						NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-						NVIC_Init(&NVIC_InitStructure);						
+            disable_nvic_usb(ENABLE);							
 						blink_led();					
 						START_TIMER;			
 				}	

@@ -1,6 +1,7 @@
 #ifndef __PROTOCAL_H
 #define __PROTOCAL_H
 #include "stdint.h"
+#include "stm32f30x.h"
 #pragma anon_unions
 
 #define  parameters_flash_address  		0x08010800
@@ -92,7 +93,7 @@ typedef __packed union
 
 
 extern frame_union  frame_data;
-
+void disable_nvic_usb(FunctionalState nvic_state);
 void process_data(void);
 void parameters_set(void);
 //uint8_t *set_loction(uint16_t data[][64]);

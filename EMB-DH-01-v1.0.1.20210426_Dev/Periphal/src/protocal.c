@@ -314,6 +314,15 @@ void software_link(void)
 	}
 }
 
+void disable_nvic_usb(FunctionalState nvic_state)
+{
+    NVIC_InitTypeDef NVIC_InitStructure; 
+  	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
+		NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //2  //1
+		NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+		NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+}
+
 //void usb_printf(const char *format, ...)
 //{
 //    va_list args;
